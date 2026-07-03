@@ -185,8 +185,8 @@ export default function PuzzleGame() {
     if (currentLevelIndex < LEVELS.length - 1) {
       setCurrentLevelIndex(currentLevelIndex + 1);
     } else {
-      // If all levels completed, just loop back
-      setCurrentLevelIndex(0);
+      // If all levels completed, navigate to the end screen
+      window.location.href = '/end';
     }
   };
 
@@ -310,7 +310,7 @@ export default function PuzzleGame() {
           fontWeight: 'bold',
           textShadow: '1px 1px 2px rgba(255,255,255,0.8)'
         }}>
-          Susun potongan puzzle ke dalam bangun datar ({level.name})
+          {`Level ${currentLevelIndex + 1} - Susun bentuk ${level.name.split(' (')[0]}`}
         </h2>
 
         <div style={{ display: 'flex', width: '100%', gap: '6cqw', alignItems: 'center', justifyContent: 'center' }}>
@@ -503,7 +503,7 @@ export default function PuzzleGame() {
                 e.currentTarget.style.boxShadow = '0 4px 0 #1b263b';
               }}
             >
-              {currentLevelIndex < LEVELS.length - 1 ? 'Lanjut ke Puzzle Berikutnya' : 'Main Lagi'}
+              {currentLevelIndex < LEVELS.length - 1 ? 'Lanjut ke Puzzle Berikutnya' : 'Selesai'}
             </button>
           </div>
         )}

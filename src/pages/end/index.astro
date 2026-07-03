@@ -1,0 +1,167 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+---
+
+<PageLayout title="Terima Kasih" homeUrl="/menu">
+  <div class="end-screen">
+    <a href="/menu" class="nav-btn bottom-left">
+      <img src="/assets/button/prev-button.png" alt="Prev" />
+    </a>
+
+    <a href="/menu" class="nav-btn bottom-right">
+      <img src="/assets/button/next-button.png" alt="Next" />
+    </a>
+
+    {/* Content Box */}
+    <div class="content-box">
+      {/* Decorative Stars */}
+      <svg class="star top-left-star" viewBox="0 0 40 40">
+        <path
+          d="M20 0 L20 40 M0 20 L40 20 M6 6 L34 34 M6 34 L34 6"
+          stroke="#000"
+          stroke-width="1.5"
+          fill="none"></path>
+      </svg>
+      <svg class="star top-right-star" viewBox="0 0 40 40">
+        <path
+          d="M20 0 L20 40 M0 20 L40 20 M6 6 L34 34 M6 34 L34 6"
+          stroke="#000"
+          stroke-width="1.5"
+          fill="none"></path>
+      </svg>
+      <svg class="star bottom-left-star" viewBox="0 0 40 40">
+        <path
+          d="M20 0 L20 40 M0 20 L40 20 M6 6 L34 34 M6 34 L34 6"
+          stroke="#000"
+          stroke-width="1.5"
+          fill="none"></path>
+      </svg>
+      <svg class="star bottom-right-star" viewBox="0 0 40 40">
+        <path
+          d="M20 0 L20 40 M0 20 L40 20 M6 6 L34 34 M6 34 L34 6"
+          stroke="#000"
+          stroke-width="1.5"
+          fill="none"></path>
+      </svg>
+
+      {/* Typography */}
+      <h1 class="title">Terima kasih</h1>
+      <p class="quote">
+        Pendidikan bukan hanya tentang memperoleh ilmu, tetapi juga membentuk
+        karakter untuk menjadi pribadi yang bermanfaat bagi sesama.
+      </p>
+    </div>
+  </div>
+</PageLayout>
+
+<style>
+  .end-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    background-image:
+      linear-gradient(to right, #e0eaf5 1px, transparent 1px),
+      linear-gradient(to bottom, #e0eaf5 1px, transparent 1px);
+    background-size: 4cqw 4cqw;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    container-type: size;
+  }
+
+  .nav-btn {
+    position: absolute;
+    width: 7cqw;
+    z-index: 30;
+    transition: transform 0.2s;
+  }
+
+  .nav-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .nav-btn img {
+    width: 100%;
+    object-fit: contain;
+  }
+
+  .top-left {
+    top: 5cqh;
+    left: 5cqw;
+  }
+  .top-right {
+    top: 5cqh;
+    right: 5cqw;
+    display: inline-block;
+  }
+  .bottom-left {
+    bottom: 5cqh;
+    left: 5cqw;
+    display: inline-block;
+  }
+  .bottom-right {
+    bottom: 5cqh;
+    right: 5cqw;
+    display: inline-block;
+  }
+
+  .content-box {
+    position: relative;
+    padding: 4cqw 6cqw;
+    text-align: center;
+    width: 80cqw;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .star {
+    position: absolute;
+    width: 3.5cqw;
+    height: 3.5cqw;
+  }
+  .top-left-star {
+    top: -2cqw;
+    left: 0;
+  }
+  .top-right-star {
+    top: -2cqw;
+    right: 0;
+  }
+  /* In the blueprint, the bottom stars are near the ends of the quote text block */
+  .bottom-left-star {
+    bottom: -2cqw;
+    left: 5cqw;
+  }
+  .bottom-right-star {
+    bottom: -2cqw;
+    right: 5cqw;
+  }
+
+  .title {
+    font-size: 8cqw; /* reduced from 12cqw */
+    color: #f15454;
+    margin: 0 0 4cqh 0;
+    font-family: "Nunito", sans-serif;
+    font-weight: 900;
+    line-height: 1.1;
+    white-space: nowrap; /* prevent wrapping */
+    letter-spacing: 0.1cqw;
+  }
+
+  .quote {
+    font-size: 2.5cqw; /* reduced from 3cqw */
+    color: #000;
+    font-family: "Nunito", sans-serif;
+    font-weight: 700;
+    margin: 0;
+    width: 70cqw;
+    line-height: 1.5;
+  }
+</style>

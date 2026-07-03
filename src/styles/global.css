@@ -38,6 +38,11 @@ body {
   color: var(--color-text-main);
   background-color: var(--color-bg-base);
   
+  /* Make app unselectable to feel like a game */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  
   /* Grid Paper Background Pattern */
   background-image: 
     linear-gradient(var(--color-grid-line) 1px, transparent 1px),
@@ -75,6 +80,12 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-heading);
   font-weight: 900;
   margin-bottom: 1rem;
+}
+
+/* Allow text selection in inputs */
+input, textarea {
+  -webkit-user-select: auto;
+  user-select: auto;
 }
 
 /* Shared Button Styles */

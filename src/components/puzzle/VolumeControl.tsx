@@ -43,7 +43,7 @@ export function VolumeControl() {
         onClick={toggleOpen}
         className="nav-btn btn-sound" 
         aria-label="Toggle Sound" 
-        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, width: '100%', height: '100%', transition: 'transform 0.2s' }} 
+        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, transition: 'transform 0.2s' }} 
         onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'} 
         onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
       >
@@ -55,14 +55,14 @@ export function VolumeControl() {
           position: 'absolute',
           left: '110%', // Positioned to the right of the button
           backgroundColor: '#fff',
-          padding: '0 1.5vw',
-          borderRadius: '2vw',
-          border: '0.2vw solid #1b263b',
+          padding: '0 1cqw',
+          borderRadius: '1.5cqw',
+          border: '0.2cqw solid #1b263b',
           display: 'flex',
           alignItems: 'center',
           animation: 'fadeIn 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)',
           zIndex: 100,
-          height: '4vw'
+          height: '3cqw'
         }}>
           <input 
             type="range" 
@@ -73,7 +73,7 @@ export function VolumeControl() {
             onChange={handleSliderChange}
             className="styled-slider"
             style={{ 
-              width: '15vw',
+              width: '12cqw',
               background: `linear-gradient(to right, #007bff 0%, #007bff ${volume * 100}%, #e0e0e0 ${volume * 100}%, #e0e0e0 100%)`
             }}
           />
@@ -88,8 +88,8 @@ export function VolumeControl() {
         .styled-slider {
           -webkit-appearance: none;
           appearance: none;
-          height: 0.8vw;
-          border-radius: 1vw;
+          height: 0.6cqw;
+          border-radius: 0.3cqw;
           outline: none;
           cursor: pointer;
         }
@@ -97,22 +97,22 @@ export function VolumeControl() {
         .styled-slider::-webkit-slider-thumb {
           -webkit-appearance: none;
           appearance: none;
-          width: 2vw;
-          height: 2vw;
+          width: 1.6cqw;
+          height: 1.6cqw;
           border-radius: 50%;
           background: #007bff;
           cursor: pointer;
-          border: 2px solid #fff;
+          border: 0.2cqw solid #fff;
           box-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
 
         .styled-slider::-moz-range-thumb {
-          width: 2vw;
-          height: 2vw;
+          width: 1.6cqw;
+          height: 1.6cqw;
           border-radius: 50%;
           background: #007bff;
           cursor: pointer;
-          border: 2px solid #fff;
+          border: 0.2cqw solid #fff;
           box-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
       `}</style>

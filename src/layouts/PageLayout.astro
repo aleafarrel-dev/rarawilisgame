@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import { VolumeControl } from '../components/puzzle/VolumeControl';
 
 interface Props {
   title: string;
@@ -14,9 +15,7 @@ const { title, pageTitle, backUrl, homeUrl = '/menu' } = Astro.props;
 <BaseLayout title={title}>
   <div class="page-wrapper">
     <nav class="top-nav">
-      <button class="nav-btn btn-sound" aria-label="Toggle Sound">
-        <img src="/assets/button/volume-button.png" alt="Sound" />
-      </button>
+      <VolumeControl client:load />
       {backUrl ? (
         <a href={backUrl} class="nav-btn btn-home" aria-label="Back">
           <img src="/assets/button/home-button.png" alt="Back" />
