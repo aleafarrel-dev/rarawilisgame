@@ -1,50 +1,21 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PuzzleGame from '../../components/puzzle/PuzzleGame';
 ---
 
 <BaseLayout title="Puzzle">
-  <main class="coming-soon-screen">
-    <nav class="top-nav">
-      <button class="nav-btn btn-sound" aria-label="Toggle Sound">
-        <img src="/assets/button/volume-button.png" alt="Sound" />
-      </button>
-      <a href="/menu" class="nav-btn btn-home" aria-label="Home">
-        <img src="/assets/button/home-button.png" alt="Home" />
-      </a>
-    </nav>
-
-    <h1 class="page-title">PUZZLE</h1>
-    <div class="coming-soon-container">
-      <h2>Segera Hadir!</h2>
-      <p>Fitur puzzle sedang dalam tahap pengembangan.</p>
-    </div>
-  </main>
+  <div class="puzzle-wrapper">
+    <PuzzleGame client:load />
+  </div>
 </BaseLayout>
 
 <style>
-  .coming-soon-screen {
+  .puzzle-wrapper {
     width: 100%;
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    padding-top: 15cqh;
-  }
-  .coming-soon-container {
-    margin-top: 15cqh;
-    background-color: #fef0ba;
-    border: 0.2cqw solid #1b263b;
-    border-radius: 2cqw;
-    padding: 5cqh 5cqw;
-    text-align: center;
-  }
-  .coming-soon-container h2 {
-    color: #ff5454;
-    font-size: 4cqw;
-  }
-  .coming-soon-container p {
-    font-size: 2cqw;
-    font-weight: 600;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
   }
 </style>
