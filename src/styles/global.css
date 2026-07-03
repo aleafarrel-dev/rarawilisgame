@@ -1,0 +1,146 @@
+:root {
+  /* Color Palette */
+  --color-primary: #ff8c42; /* Oranye aksen */
+  --color-primary-hover: #ff9d5c;
+  --color-secondary: #f472b6; /* Merah muda (pink) */
+  --color-text-main: #334155; /* Abu-abu gelap */
+  --color-text-heading: #ef4444; /* Merah cerah */
+  --color-bg-base: #f8fcff; /* Putih kebiruan */
+  --color-grid-line: rgba(56, 189, 248, 0.2); /* Biru muda transparan */
+  
+  /* Quiz Colors */
+  --color-opt-a: #c084fc; /* Ungu pastel */
+  --color-opt-b: #60a5fa; /* Biru pastel */
+  --color-opt-c: #fde047; /* Kuning pastel */
+  --color-opt-d: #4ade80; /* Hijau pastel */
+
+  /* Typography */
+  --font-family-base: 'Nunito', 'Baloo 2', 'Quicksand', 'Comic Neue', sans-serif;
+  --font-size-base: 16px;
+
+  /* Sizing & Spacing */
+  --border-radius-base: 1rem;
+  --border-radius-pill: 9999px;
+  --border-width-thick: 4px;
+  --nav-btn-size: 7cqw; /* Standardize top navigation button sizes */
+}
+
+/* Reset & Global */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  color: var(--color-text-main);
+  background-color: var(--color-bg-base);
+  
+  /* Grid Paper Background Pattern */
+  background-image: 
+    linear-gradient(var(--color-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center top;
+  
+  /* Lock to viewport to simulate game screen */
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Base App Container to maintain aspect ratio (16:9 for landscape) */
+.app-container {
+  width: 100vw;
+  height: 56.25vw; /* 9/16 = 0.5625 */
+  max-height: 100vh;
+  max-width: 177.77vh; /* 16/9 = 1.7777 */
+  margin: auto;
+  position: relative;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  container-type: size;
+  container-name: app;
+}
+
+/* Typographic Defaults */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-heading);
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+
+/* Shared Button Styles */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Shared Navigation Styles (Extracted to fix View Transition conflicts) */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 5cqh;
+  left: 5cqw;
+  right: 5cqw;
+  z-index: 20;
+}
+
+.nav-btn {
+  width: var(--nav-btn-size);
+  height: var(--nav-btn-size);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.nav-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.nav-btn:hover {
+  transform: scale(1.05);
+}
+
+.nav-btn:active {
+  transform: scale(0.95);
+}
+
+.page-title {
+  position: absolute;
+  top: 5cqh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 5cqw;
+  font-weight: 900;
+  color: var(--color-text-heading);
+  z-index: 10;
+  text-align: center;
+  margin: 0;
+  width: max-content;
+}

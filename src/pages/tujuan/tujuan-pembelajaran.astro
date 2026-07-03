@@ -1,0 +1,138 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Tujuan Pembelajaran">
+  <main class="tujuan-detail-screen">
+    <nav class="top-nav">
+      <button class="nav-btn btn-sound" aria-label="Toggle Sound">
+        <img src="/assets/button/volume-button.png" alt="Sound" />
+      </button>
+      <a href="/menu" class="nav-btn btn-home" aria-label="Home">
+        <img src="/assets/button/home-button.png" alt="Home" />
+      </a>
+    </nav>
+
+    <h1 class="tujuan-pembelajaran-title">TUJUAN PEMBELAJARAN</h1>
+
+    <div class="content-container">
+      <div class="nameplate-container">
+        <img
+          src="/assets/images/decoration-nameplate-2.png"
+          alt="Nameplate"
+          class="nameplate-bg"
+        />
+        <div class="content-text-wrapper">
+          <ul class="tujuan-list">
+            <li>1. Siswa mampu mengenal berbagai bangun datar.</li>
+            <li>2. Siswa dapat memahami rumus luas bangun datar.</li>
+            <li>3. Siswa dapat menghitung luas berbagai bangun datar.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <a href="/tujuan" id="prevBtn" class="nav-btn btn-prev" aria-label="Previous">
+      <img src="/assets/button/prev-button.png" alt="Previous" />
+    </a>
+  </main>
+
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      const prevBtn = document.getElementById('prevBtn');
+      if (prevBtn) {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('from') === 'jenis2') {
+          prevBtn.setAttribute('href', '/tujuan/jenis-2');
+        } else {
+          prevBtn.setAttribute('href', '/tujuan');
+        }
+      }
+    });
+  </script>
+</BaseLayout>
+
+<style>
+  .tujuan-detail-screen {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: 10cqh;
+  }
+
+  .tujuan-pembelajaran-title {
+    font-size: 5cqw;
+    font-weight: 900;
+    color: #ff5454;
+    text-align: center;
+    margin: 2cqh 0 -2cqh 0;
+    text-shadow:
+      0.3cqw 0.3cqw 0 #fff,
+      -0.1cqw -0.1cqw 0 #fff,
+      0.1cqw -0.1cqw 0 #fff,
+      -0.1cqw 0.1cqw 0 #fff;
+    letter-spacing: 0.2cqw;
+    z-index: 2;
+  }
+
+  .content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex: 1;
+    z-index: 3;
+    box-sizing: border-box;
+  }
+
+  .nameplate-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70cqw;
+  }
+
+  .nameplate-bg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0.5cqw 0.5cqw 0 rgba(0, 0, 0, 0.15));
+  }
+
+  .content-text-wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 85%;
+    height: 75%;
+    margin-top: 12%;
+  }
+
+  .tujuan-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    width: 90%;
+  }
+
+  .tujuan-list li {
+    font-size: 2.5cqw;
+    font-weight: 900;
+    color: #ff5454;
+    margin-bottom: 2cqh;
+    line-height: 1.4;
+  }
+
+  .btn-prev {
+    position: absolute;
+    bottom: 3cqh;
+    left: 4cqw;
+    z-index: 20;
+  }
+</style>

@@ -1,0 +1,136 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+---
+
+<PageLayout title="Menu Tujuan">
+  <main class="tujuan-menu-screen">
+    <!-- Top Nav -->
+
+
+    <h1 class="tujuan-title">TUJUAN PEMBELAJARAN</h1>
+
+    <div class="content-container">
+      <div class="menu-options">
+        <a href="/tujuan/elemen" class="menu-btn">
+          ELEMEN MATERI
+        </a>
+        <a href="/tujuan/tujuan-pembelajaran" class="menu-btn">
+          TUJUAN<br />PEMBELAJARAN
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom Decorations -->
+    <img src="/assets/images/decoration-study-1.png" alt="" class="deco-bottom-left" onerror="this.style.display='none'" />
+    <img src="/assets/images/decoration-study-2.png" alt="" class="deco-bottom-right" onerror="this.style.display='none'" />
+  </main>
+</PageLayout>
+
+<style>
+  .tujuan-menu-screen {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: 15cqh;
+  }
+
+  .tujuan-title {
+    font-size: 4.5cqw;
+    font-weight: 900;
+    color: #ff5454;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0.3cqw 0.3cqw 0 #fff, -0.1cqw -0.1cqw 0 #fff, 0.1cqw -0.1cqw 0 #fff, -0.1cqw 0.1cqw 0 #fff;
+    letter-spacing: 0.2cqw;
+    z-index: 2;
+    position: relative;
+  }
+
+  .content-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex: 1;
+    z-index: 2;
+    position: relative;
+    padding-bottom: 15cqh;
+  }
+
+  .menu-options {
+    display: flex;
+    flex-direction: row;
+    gap: 6cqw;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .menu-btn {
+    position: relative;
+    background-color: #fae3d9;
+    border: 0.3cqw solid #ff5454;
+    border-radius: 2cqw;
+    padding: 2.5cqw 4cqw;
+    font-size: 2.8cqw;
+    font-weight: 900;
+    color: #ff5454;
+    text-decoration: none;
+    text-align: center;
+    transition: transform 0.1s;
+    min-width: 32cqw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    text-shadow: 0.1cqw 0.1cqw 0 #fff;
+  }
+
+  .menu-btn::before {
+    content: '“';
+    position: absolute;
+    top: -1.5cqw;
+    left: -0.5cqw;
+    font-size: 5cqw;
+    color: #ff5454;
+    line-height: 1;
+    font-family: serif;
+    text-shadow: 0.1cqw 0.1cqw 0 #fff;
+  }
+
+  .menu-btn::after {
+    content: '”';
+    position: absolute;
+    bottom: -3cqw;
+    right: -0.5cqw;
+    font-size: 5cqw;
+    color: #ff5454;
+    line-height: 1;
+    font-family: serif;
+    text-shadow: 0.1cqw 0.1cqw 0 #fff;
+  }
+
+  .menu-btn:active {
+    transform: scale(0.95);
+  }
+
+  .deco-bottom-left {
+    position: absolute;
+    bottom: 0;
+    left: 2cqw;
+    width: 18cqw;
+    height: auto;
+    z-index: 10;
+  }
+
+  .deco-bottom-right {
+    position: absolute;
+    bottom: 0;
+    right: 2cqw;
+    width: 18cqw;
+    height: auto;
+    z-index: 10;
+  }
+</style>

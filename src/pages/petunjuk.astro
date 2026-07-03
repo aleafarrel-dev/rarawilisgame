@@ -1,0 +1,114 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+---
+
+<PageLayout title="Petunjuk" pageTitle="PETUNJUK">
+  <main class="petunjuk-screen">
+    <div class="whiteboard-container">
+      <img
+        src="/assets/images/decoration-whiteboard.png"
+        class="whiteboard-bg"
+        alt="Whiteboard"
+      />
+
+      <div class="instructions-list">
+        <div class="instructions-wrapper">
+          <div class="instruction-item">
+            <img
+              src="/assets/button/home-button.png"
+              alt="Home Button"
+              class="inst-icon"
+            />
+            <span class="inst-text">Menuju Halaman utama</span>
+          </div>
+          <div class="instruction-item">
+            <img
+              src="/assets/button/volume-button.png"
+              alt="Sound Button"
+              class="inst-icon"
+            />
+            <span class="inst-text">Mengatur suara musik</span>
+          </div>
+          <div class="instruction-item">
+            <img
+              src="/assets/button/next-button.png"
+              alt="Next Button"
+              class="inst-icon"
+            />
+            <span class="inst-text">Membuka halaman berikutnya</span>
+          </div>
+          <div class="instruction-item">
+            <img
+              src="/assets/button/prev-button.png"
+              alt="Prev Button"
+              class="inst-icon"
+            />
+            <span class="inst-text">Membuka halaman sebelumnya</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .petunjuk-screen {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-top: 5cqh;
+  }
+
+  .whiteboard-container {
+    position: relative;
+    width: 75cqw;
+    max-width: 1000px;
+    margin: 15cqh auto 0;
+  }
+
+  .whiteboard-bg {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 2cqw;
+  }
+
+  .instructions-list {
+    position: absolute;
+    top: 5%;
+    bottom: 12%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .instructions-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5cqh;
+  }
+
+  .instruction-item {
+    display: flex;
+    align-items: center;
+    gap: 4cqw;
+  }
+
+  .inst-icon {
+    width: 6cqw;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .inst-text {
+    font-size: 3cqw;
+    font-weight: 900;
+    color: var(--color-text-heading);
+    text-align: left;
+    line-height: 1.2;
+  }
+</style>

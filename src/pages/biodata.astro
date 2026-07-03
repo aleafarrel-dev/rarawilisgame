@@ -1,0 +1,146 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout title="Isi Biodata" pageTitle="ISI BIODATA">
+  <main class="biodata-screen">
+
+
+    <div class="board-container">
+      <div class="board">
+        <div class="pin pin-left"></div>
+        <div class="pin pin-right"></div>
+        
+        <form class="biodata-form" action="/menu">
+          <label for="nama">Nama</label>
+          <span class="colon">:</span>
+          <input type="text" id="nama" name="nama" required />
+          
+          <label for="kelas">Kelas</label>
+          <span class="colon">:</span>
+          <input type="text" id="kelas" name="kelas" required />
+          
+          <label for="sekolah">Sekolah</label>
+          <span class="colon">:</span>
+          <input type="text" id="sekolah" name="sekolah" required />
+          
+          <!-- Hidden submit button triggered by the visual START button -->
+          <button type="submit" id="submit-btn" style="display: none;"></button>
+        </form>
+      </div>
+    </div>
+
+    <img src="/assets/images/decoration-otters.png" alt="Otter waving" class="deco-img" />
+
+    <button class="btn-play" onclick="document.getElementById('submit-btn').click()">
+      <img src="/assets/button/start-button.png" alt="Start Game" />
+    </button>
+  </main>
+</PageLayout>
+
+<style>
+  .biodata-screen {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .board-container {
+    position: absolute;
+    top: 22cqh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55cqw;
+    z-index: 5;
+  }
+
+  .board {
+    background-color: #fef0ba;
+    border: 0.2cqw solid #1b263b;
+    box-shadow: 1.5cqw 1.5cqw 0 #e6d3a5;
+    padding: 8cqh 4cqw 8cqh 4cqw;
+    position: relative;
+  }
+
+  .pin {
+    position: absolute;
+    top: 2cqh;
+    width: 2.5cqw;
+    height: 2.5cqw;
+    background-color: #00a896;
+    border-radius: 50%;
+  }
+  .pin-left { left: 2cqw; }
+  .pin-right { right: 2cqw; }
+
+  .biodata-form {
+    display: grid;
+    grid-template-columns: max-content max-content 1fr;
+    gap: 4cqh 1.5cqw;
+    align-items: center;
+  }
+
+  .biodata-form label {
+    font-size: 3.5cqw;
+    font-weight: bold;
+    color: var(--color-text-heading);
+    text-align: left;
+  }
+
+  .biodata-form .colon {
+    font-size: 3.5cqw;
+    font-weight: bold;
+    color: var(--color-text-heading);
+    text-align: center;
+  }
+
+  .biodata-form input {
+    width: 100%;
+    height: 6cqh;
+    font-size: 3cqw;
+    padding: 0 1.5cqw;
+    border: 0.2cqw solid #1b263b;
+    background: #fff;
+    outline: none;
+    font-family: inherit;
+    min-width: 0;
+  }
+
+  .biodata-form input:focus {
+    border-color: var(--color-primary);
+  }
+
+  .deco-img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 25cqw;
+    height: auto;
+    z-index: 6;
+    pointer-events: none;
+  }
+
+  .btn-play {
+    position: absolute;
+    bottom: 5cqh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20cqw;
+    height: auto;
+    z-index: 10;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  .btn-play img {
+    width: 100%;
+    height: auto;
+  }
+
+  .btn-play:hover { transform: translateX(-50%) scale(1.05); }
+  .btn-play:active { transform: translateX(-50%) scale(0.95); }
+</style>

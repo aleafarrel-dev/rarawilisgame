@@ -1,0 +1,142 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Jenis-Jenis Bangun Datar">
+  <main class="jenis-screen">
+    <nav class="top-nav">
+      <button class="nav-btn btn-sound" aria-label="Toggle Sound">
+        <img src="/assets/button/volume-button.png" alt="Sound" />
+      </button>
+      <a href="/menu" class="nav-btn btn-home" aria-label="Home">
+        <img src="/assets/button/home-button.png" alt="Home" />
+      </a>
+    </nav>
+
+    <h1 class="jenis-title">JENIS - JENIS<br />BANGUN DATAR</h1>
+
+    <div class="shapes-container">
+      <div class="shape-item">
+        <img
+          src="/assets/2d-shape/rectangle.png"
+          alt="Persegi Panjang"
+          class="shape-img rect-img"
+        />
+        <h2 class="shape-name">Persegi Panjang</h2>
+      </div>
+      <div class="shape-item">
+        <img
+          src="/assets/2d-shape/square.png"
+          alt="Persegi"
+          class="shape-img square-img"
+        />
+        <h2 class="shape-name">Persegi</h2>
+      </div>
+      <div class="shape-item">
+        <img
+          src="/assets/2d-shape/triangle.png"
+          alt="Segitiga"
+          class="shape-img tri-img"
+        />
+        <h2 class="shape-name">Segitiga</h2>
+      </div>
+    </div>
+
+    <a href="/tujuan/elemen" class="nav-btn btn-prev" aria-label="Previous">
+      <img src="/assets/button/prev-button.png" alt="Previous" />
+    </a>
+
+    <a href="/tujuan/jenis-2" class="nav-btn btn-next" aria-label="Next">
+      <img src="/assets/button/next-button.png" alt="Next" />
+    </a>
+  </main>
+</BaseLayout>
+
+<style>
+  .jenis-screen {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: 8cqh;
+  }
+
+  .jenis-title {
+    font-size: 5cqw;
+    font-weight: 900;
+    color: #ff5454;
+    text-align: center;
+    margin: 0;
+    line-height: 1.2;
+    text-shadow:
+      0.3cqw 0.3cqw 0 #fff,
+      -0.1cqw -0.1cqw 0 #fff,
+      0.1cqw -0.1cqw 0 #fff,
+      -0.1cqw 0.1cqw 0 #fff;
+    letter-spacing: 0.2cqw;
+    z-index: 2;
+  }
+
+  .shapes-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 5cqw;
+    width: 90%;
+    flex: 1;
+    margin-bottom: 18cqh;
+    z-index: 3;
+  }
+
+  .shape-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .shape-img {
+    height: auto;
+    margin-bottom: 2cqh;
+    transition: transform 0.3s ease;
+  }
+
+  .shape-item:hover .shape-img {
+    transform: scale(1.05);
+  }
+
+  .rect-img {
+    width: 25cqw;
+  }
+  .square-img {
+    width: 18cqw;
+  }
+  .tri-img {
+    width: 22cqw;
+  }
+
+  .shape-name {
+    font-size: 3.5cqw;
+    font-weight: 900;
+    color: #ff5454;
+    text-align: center;
+    margin: 0;
+  }
+
+  .btn-prev {
+    position: absolute;
+    bottom: 3cqh;
+    left: 4cqw;
+    z-index: 20;
+  }
+
+  .btn-next {
+    position: absolute;
+    bottom: 3cqh;
+    right: 4cqw;
+    z-index: 20;
+  }
+</style>

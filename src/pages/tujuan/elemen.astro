@@ -1,0 +1,157 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+---
+
+<PageLayout title="Elemen Materi">
+  <main class="tujuan-detail-screen">
+    <h1 class="elemen-title">ELEMEN MATERI</h1>
+
+    <div class="content-container">
+      <div class="nameplate-container">
+        <img
+          src="/assets/images/decoration-nameplate-1.png"
+          alt="Nameplate"
+          class="nameplate-bg"
+        />
+        <div class="content-text-wrapper">
+          <p class="desc-text">
+            Bangun datar adalah bentuk dasar dari suatu benda atau barang.
+            Macam-macam bangun datar dapat ditemui di sekitar kita. Contohnya,
+            persegi, segitiga, dan lingkaran.
+          </p>
+          <p class="desc-text">
+            Bangun datar punya ciri khusus, yaitu garis lurus atau lengkung yang
+            bertemu dan membentuk satu bidang. Bentuk-bentuk bangun datar,
+            penting banget dipelajari, karena kita bisa mengaplikasikannya untuk
+            mengukur luas dan keliling suatu bidang.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <a href="/tujuan" class="nav-btn btn-prev" aria-label="Previous">
+      <img src="/assets/button/prev-button.png" alt="Previous" />
+    </a>
+
+    <a href="/tujuan/jenis" class="nav-btn btn-next" aria-label="Next">
+      <img src="/assets/button/next-button.png" alt="Next" />
+    </a>
+
+    <!-- Bottom Decorations -->
+    <img
+      src="/assets/images/decoration-study-3.png"
+      alt=""
+      class="deco-bottom-left"
+      onerror="this.style.display='none'"
+    />
+    <img
+      src="/assets/images/decoration-study-4.png"
+      alt=""
+      class="deco-bottom-right"
+      onerror="this.style.display='none'"
+    />
+  </main>
+</PageLayout>
+
+<style>
+  .tujuan-detail-screen {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: 10cqh;
+  }
+
+  .elemen-title {
+    font-size: 5cqw;
+    font-weight: 900;
+    color: #ff5454;
+    text-align: center;
+    margin: -5cqh 0 4cqh 0; /* Negative margin to pull nameplate up closer to title */
+    text-shadow:
+      0.3cqw 0.3cqw 0 #fff,
+      -0.1cqw -0.1cqw 0 #fff,
+      0.1cqw -0.1cqw 0 #fff,
+      -0.1cqw 0.1cqw 0 #fff;
+    letter-spacing: 0.2cqw;
+    z-index: 2;
+  }
+
+  .content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    flex: 1;
+    z-index: 3; /* Ensure it overlaps title if needed */
+    box-sizing: border-box;
+    margin-top: -6cqh; /* Pull up closer to title */
+  }
+
+  .nameplate-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75cqw;
+  }
+
+  .nameplate-bg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0.5cqw 0.5cqw 0 rgba(0, 0, 0, 0.15));
+  }
+
+  .content-text-wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 78%;
+    height: 60%;
+    margin-top: 25%; /* Push text down to avoid pins */
+    transform: rotate(-2.5deg);
+  }
+
+  .desc-text {
+    font-size: 1.8cqw;
+    font-weight: 600;
+    color: #ff5454;
+    margin: 0 0 1.5cqh 0;
+    line-height: 1.4;
+    text-align: justify;
+  }
+
+  .btn-prev {
+    position: absolute;
+    bottom: 3cqh;
+    left: 4cqw;
+    z-index: 20;
+  }
+
+  .btn-next {
+    position: absolute;
+    bottom: 3cqh;
+    right: 4cqw;
+    z-index: 20;
+  }
+
+  .deco-bottom-left {
+    position: absolute;
+    bottom: 15cqh;
+    left: -4cqw;
+    width: 20cqw;
+    z-index: 10;
+  }
+
+  .deco-bottom-right {
+    position: absolute;
+    bottom: 15cqh;
+    right: -4cqw;
+    width: 20cqw;
+    z-index: 10;
+  }
+</style>

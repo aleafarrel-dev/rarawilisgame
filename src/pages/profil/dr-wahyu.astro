@@ -1,0 +1,160 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Profil: Dr. Wahyu">
+  <main class="profil-detail-screen">
+    <nav class="top-nav">
+      <button class="nav-btn btn-sound" aria-label="Toggle Sound">
+        <img src="/assets/button/volume-button.png" alt="Sound" />
+      </button>
+      <a href="/menu" class="nav-btn btn-home" aria-label="Home">
+        <img src="/assets/button/home-button.png" alt="Home" />
+      </a>
+    </nav>
+
+    <h1 class="page-title">PROFIL PENGEMBANG</h1>
+
+    <div class="content-container">
+      <img
+        src="/assets/images/profile-img-1.png"
+        alt="Dr. Wahyu Purwaningsih, M.Pd."
+        class="profile-photo"
+      />
+
+      <div class="bio-board">
+        <p class="bio-text">
+          Dr. Wahyu Purwaningsih, M.Pd., lahir di Bantul, Yogyakarta pada 22
+          Oktober 1997. Beliau menempuh pendidikan di S1 PGSD FIP UNY pada tahun
+          2015 hingga 2019, tak lama dari itu, kemudian beliau langsung
+          melanjutkan pendidikannya pada strata 2 atau S2 pada program studi S2
+          Pendidikan Dasar FIP UNY hingga lulus pada tahun 2021. Kemudian
+          setelah lulus, beliau berusaha mencari pengalaman kerja sebagai guru
+          di SD. Pada tahun 2022, beliau melanjutkan pendidikan S3 atau doktoral
+          di Pendidikan Dasar FIPP UNY dan sekarang ibu Ayu bekerja sebagai
+          dosen di UNU Yogyakarta dari tahun 2025-sekarang.
+        </p>
+        <img
+          src="/assets/images/decoration-study-1.png"
+          alt=""
+          class="deco-top"
+          onerror="this.style.display='none'"
+        />
+        <img
+          src="/assets/images/decoration-study-2.png"
+          alt=""
+          class="deco-bottom"
+          onerror="this.style.display='none'"
+        />
+      </div>
+    </div>
+
+    <a href="/profil" class="nav-btn btn-prev" aria-label="Previous">
+      <img src="/assets/button/prev-button.png" alt="Previous" />
+    </a>
+
+    <a href="/profil/rara-wilis" class="nav-btn btn-next" aria-label="Next">
+      <img src="/assets/button/next-button.png" alt="Next" />
+    </a>
+  </main>
+</BaseLayout>
+
+<style>
+  .profil-detail-screen {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .page-title {
+    font-size: 4.5cqw;
+    font-weight: 900;
+    color: #ff5454;
+    text-align: center;
+    margin: 0 0 3cqh 0;
+    text-shadow:
+      0.3cqw 0.3cqw 0 #fff,
+      -0.1cqw -0.1cqw 0 #fff,
+      0.1cqw -0.1cqw 0 #fff,
+      -0.1cqw 0.1cqw 0 #fff;
+    letter-spacing: 0.2cqw;
+    z-index: 2;
+  }
+
+  .content-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4cqw;
+    width: 100%;
+    z-index: 1;
+    box-sizing: border-box;
+  }
+
+  .profile-photo {
+    width: 25cqw;
+    height: 55cqh;
+    object-fit: cover;
+    border: 0.4cqw solid #fff;
+    box-shadow: 0.5cqw 0.5cqw 0 rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+  }
+
+  .bio-board {
+    position: relative;
+    background-color: #ffcc66;
+    border: 0.3cqw solid #000;
+    padding: 3cqw 4cqw;
+    width: 50cqw;
+    height: 55cqh;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .bio-text {
+    font-size: 1.5cqw;
+    line-height: 1.6;
+    font-weight: 600;
+    color: #000;
+    margin: 0;
+    text-align: justify;
+  }
+
+  .deco-top {
+    position: absolute;
+    top: -4cqw;
+    right: -4cqw;
+    width: 9cqw;
+    height: auto;
+    z-index: 10;
+  }
+
+  .deco-bottom {
+    position: absolute;
+    bottom: -4cqw;
+    right: -4cqw;
+    width: 8cqw;
+    height: auto;
+    z-index: 10;
+  }
+
+  .btn-prev {
+    position: absolute;
+    bottom: 3cqh;
+    left: 4cqw;
+    z-index: 20;
+  }
+
+  .btn-next {
+    position: absolute;
+    bottom: 3cqh;
+    right: 4cqw;
+    z-index: 20;
+  }
+</style>
