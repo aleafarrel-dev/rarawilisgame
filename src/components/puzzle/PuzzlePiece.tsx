@@ -36,7 +36,7 @@ export function PuzzlePiece({ id, path, color, width, height, disabled, col, row
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...listeners} {...attributes} aria-label={`Puzzle Piece ${id}`}>
+    <div ref={setNodeRef} className="no-click-sfx" style={style} {...listeners} {...attributes} aria-label={`Puzzle Piece ${id}`}>
       <svg width={trueWidth} height={trueHeight} viewBox={`${vLeft} ${vTop} ${trueWidth} ${trueHeight}`} style={{ overflow: 'visible' }}>
         <defs>
           <filter id={`shadow-${id}`} x="-30%" y="-30%" width="160%" height="160%">

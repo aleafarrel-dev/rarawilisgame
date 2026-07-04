@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { navigate } from 'astro:transitions/client';
 import { DndContext, useSensor, useSensors, PointerSensor, DragOverlay } from '@dnd-kit/core';
 import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core';
 import { PuzzlePiece } from './PuzzlePiece';
@@ -8,6 +9,7 @@ import type { EdgeType } from '../../utils/jigsaw';
 import confetti from 'canvas-confetti';
 import { playAudio } from '../../stores/audioStore';
 import { VolumeControl } from './VolumeControl';
+import { PUZZLE_LEVELS } from '../../data/puzzleLevels';
 
 export interface PieceData {
   id: string;
@@ -21,57 +23,11 @@ export interface PieceData {
   trueHeight: number;
 }
 
-const LEVELS = [
-  {
-    id: 'square-2x2',
-    name: 'Persegi (Level 1)',
-    color: '#f4a261',
-    layout: [
-      'XX',
-      'XX'
-    ],
-    shapePath: 'M 0 0 H 160 V 160 H 0 Z'
-  },
-  {
-    id: 'trapesium',
-    name: 'Trapesium (Level 2)',
-    color: '#2a9d8f',
-    layout: [
-      ' XX ',
-      'XXXX'
-    ],
-    shapePath: 'M 80 0 L 240 0 L 320 160 L 0 160 Z'
-  },
-  {
-    id: 'belah-ketupat',
-    name: 'Belah Ketupat (Level 3)',
-    color: '#e9c46a',
-    layout: [
-      '  X  ',
-      ' XXX ',
-      'XXXXX',
-      ' XXX ',
-      '  X  '
-    ],
-    shapePath: 'M 200 0 L 400 200 L 200 400 L 0 200 Z'
-  },
-  {
-    id: 'rect-5x3',
-    name: 'Persegi Panjang (Level 4)',
-    color: '#e76f51',
-    layout: [
-      'XXXXX',
-      'XXXXX',
-      'XXXXX'
-    ],
-    shapePath: 'M 0 0 H 400 V 240 H 0 Z'
-  }
-];
 
 export default function PuzzleGame() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
-  const level = LEVELS[currentLevelIndex];
+  const level = PUZZLE_LEVELS[currentLevelIndex];
 
   const layout = level.layout;
   const cols = layout[0].length;
@@ -156,7 +112,8 @@ export default function PuzzleGame() {
 
       const piece = pieces.find(p => p.id === pieceId);
       if (piece && `slot-${piece.col}-${piece.row}` === slotId) {
-        // Correct slot!
+        // Correct slot — snap SFX
+        playAudio('/assets/audio/mouse-click.mp3');
         const newPieces = pieces.map(p => p.id === pieceId ? { ...p, isPlaced: true } : p);
         setPieces(newPieces);
 
@@ -182,11 +139,11 @@ export default function PuzzleGame() {
   const boardHeight = rows * pieceH;
 
   const nextLevel = () => {
-    if (currentLevelIndex < LEVELS.length - 1) {
+    if (currentLevelIndex < PUZZLE_LEVELS.length - 1) {
       setCurrentLevelIndex(currentLevelIndex + 1);
     } else {
-      // If all levels completed, navigate to the end screen
-      window.location.href = '/end';
+      // All levels done — use View Transitions navigate to preserve audio
+      navigate('/end');
     }
   };
 
@@ -503,7 +460,7 @@ export default function PuzzleGame() {
                 e.currentTarget.style.boxShadow = '0 4px 0 #1b263b';
               }}
             >
-              {currentLevelIndex < LEVELS.length - 1 ? 'Lanjut ke Puzzle Berikutnya' : 'Selesai'}
+              {currentLevelIndex < PUZZLE_LEVELS.length - 1 ? 'Lanjut ke Puzzle Berikutnya' : 'Selesai'}
             </button>
           </div>
         )}

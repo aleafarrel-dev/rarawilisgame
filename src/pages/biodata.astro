@@ -144,3 +144,32 @@ import PageLayout from '../layouts/PageLayout.astro';
   .btn-play:hover { transform: translateX(-50%) scale(1.05); }
   .btn-play:active { transform: translateX(-50%) scale(0.95); }
 </style>
+
+<script>
+  // Skip biodata if user already has an active session
+  if (sessionStorage.getItem('bgm_started') === 'true') {
+    window.location.replace('/menu');
+  }
+
+  const form = document.querySelector('.biodata-form') as HTMLFormElement;
+
+  form?.addEventListener('submit', (e) => {
+    sessionStorage.setItem('bgm_started', 'true');
+    
+    // Save biodata
+    const formData = new FormData(form);
+    sessionStorage.setItem('biodata_nama', formData.get('nama') as string || '');
+    sessionStorage.setItem('biodata_kelas', formData.get('kelas') as string || '');
+    sessionStorage.setItem('biodata_sekolah', formData.get('sekolah') as string || '');
+
+    const audio = document.getElementById('global-bgm') as HTMLAudioElement | null;
+    if (audio) {
+      const volume = parseFloat(localStorage.getItem('bgm_volume') ?? '0.5');
+      const muted  = localStorage.getItem('bgm_muted') === 'true';
+      audio.volume = isNaN(volume) ? 0.5 : volume;
+      audio.muted  = muted;
+      audio.play().catch(() => {/* will retry on astro:page-load */});
+    }
+  });
+</script>
+

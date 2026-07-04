@@ -28,8 +28,86 @@ const { title } = Astro.props;
     <ClientRouter />
   </head>
   <body>
+    <!-- Global BGM: transition:persist survives View Transitions navigation -->
+    <audio
+      id="global-bgm"
+      src="/assets/audio/backsound.ogg"
+      loop
+      preload="auto"
+      transition:persist
+      transition:name="global-bgm"
+    ></audio>
+
     <div class="app-container">
       <slot />
     </div>
   </body>
 </html>
+
+<script>
+  const KEY_VOLUME  = 'bgm_volume';
+  const KEY_MUTED   = 'bgm_muted';
+  const KEY_STARTED = 'bgm_started';
+
+  // --- BGM Control ---
+
+  function applyBgmState(audio: HTMLAudioElement): void {
+    const volume = parseFloat(localStorage.getItem(KEY_VOLUME) ?? '0.5');
+    audio.volume = isNaN(volume) ? 0.5 : Math.min(1, Math.max(0, volume));
+    audio.muted  = localStorage.getItem(KEY_MUTED) === 'true';
+  }
+
+  function tryPlayBgm(audio: HTMLAudioElement): void {
+    if (audio.paused && sessionStorage.getItem(KEY_STARTED) === 'true') {
+      audio.play().catch(() => {/* retry on next user interaction */});
+    }
+  }
+
+  function initBgm(): void {
+    const audio = document.getElementById('global-bgm') as HTMLAudioElement | null;
+    if (!audio) return;
+    applyBgmState(audio);
+    tryPlayBgm(audio);
+  }
+
+  document.addEventListener('astro:page-load', initBgm);
+  document.addEventListener('bgm-update', () => {
+    const audio = document.getElementById('global-bgm') as HTMLAudioElement | null;
+    if (audio) applyBgmState(audio);
+  });
+
+  // --- Global Click SFX ---
+  // Pre-load a pool of Audio instances to avoid latency on rapid clicks
+  const SFX_SRC   = '/assets/audio/mouse-click.mp3';
+  const SFX_POOL  = Array.from({ length: 4 }, () => new Audio(SFX_SRC));
+  let   sfxPoolIdx = 0;
+
+  function playClickSfx(): void {
+    const volume = parseFloat(localStorage.getItem(KEY_VOLUME) ?? '0.5');
+    const muted  = localStorage.getItem(KEY_MUTED) === 'true';
+    if (muted || volume === 0) return;
+
+    const sfx = SFX_POOL[sfxPoolIdx];
+    sfxPoolIdx = (sfxPoolIdx + 1) % SFX_POOL.length;
+
+    sfx.volume  = isNaN(volume) ? 0.5 : Math.min(1, Math.max(0, volume));
+    sfx.currentTime = 0;
+    sfx.play().catch(() => {});
+  }
+
+  function attachClickSfx(): void {
+    document.addEventListener('click', (e: MouseEvent) => {
+      const target = e.target as Element;
+      // Fire on any interactive element (button, link, [role="button"]) except range inputs and excluded elements
+      if (target.closest('button, a, [role="button"]') && !target.closest('input[type="range"]') && !target.closest('.no-click-sfx')) {
+        playClickSfx();
+      }
+    }, { capture: true });
+  }
+
+  // Attach once — persists across View Transitions because it's on `document`
+  attachClickSfx();
+
+  // Initial BGM init
+  initBgm();
+</script>

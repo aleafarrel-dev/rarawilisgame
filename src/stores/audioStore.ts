@@ -1,11 +1,27 @@
 import { atom } from 'nanostores';
 
-export const volumeStore = atom<number>(0.5); // Default volume is 50%
+const KEY_VOLUME  = 'bgm_volume';
+const KEY_MUTED   = 'bgm_muted';
 
-export function playAudio(src: string) {
-  const audio = new Audio(src);
-  audio.volume = volumeStore.get();
-  audio.play().catch(e => {
-    console.warn('Audio play blocked or failed:', e);
-  });
+function getStored(key: string, fallback: string): string {
+  if (typeof localStorage === 'undefined') return fallback;
+  return localStorage.getItem(key) ?? fallback;
+}
+
+export const volumeStore   = atom<number>(parseFloat(getStored(KEY_VOLUME, '0.5')));
+export const bgmMutedStore = atom<boolean>(getStored(KEY_MUTED, 'false') === 'true');
+
+volumeStore.subscribe(v => {
+  if (typeof localStorage !== 'undefined') localStorage.setItem(KEY_VOLUME, String(v));
+});
+
+bgmMutedStore.subscribe(m => {
+  if (typeof localStorage !== 'undefined') localStorage.setItem(KEY_MUTED, String(m));
+});
+
+/** Play a one-shot sound effect. Respects current volume level. */
+export function playAudio(src: string): void {
+  const sfx = new Audio(src);
+  sfx.volume = volumeStore.get();
+  sfx.play().catch(() => {/* SFX blocked by autoplay policy */});
 }

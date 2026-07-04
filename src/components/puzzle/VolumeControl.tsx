@@ -1,59 +1,79 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useStore } from '@nanostores/react';
-import { volumeStore } from '../../stores/audioStore';
+import { volumeStore, bgmMutedStore } from '../../stores/audioStore';
+
+function dispatchBgmUpdate(): void {
+  document.dispatchEvent(new CustomEvent('bgm-update'));
+}
 
 export function VolumeControl() {
   const volume = useStore(volumeStore);
+  const muted  = useStore(bgmMutedStore);
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Close when clicking outside
+  // Close panel when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setIsOpen(false);
       }
     };
-    
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
       document.addEventListener('touchstart', handleClickOutside);
     }
-    
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('touchstart', handleClickOutside);
     };
   }, [isOpen]);
 
-  const toggleOpen = () => {
-    setIsOpen(!isOpen);
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = parseFloat(e.target.value);
+    volumeStore.set(v);
+    // Un-mute automatically when slider is moved above 0
+    if (v > 0 && muted) {
+      bgmMutedStore.set(false);
+    }
+    dispatchBgmUpdate();
   };
 
-  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    volumeStore.set(parseFloat(e.target.value));
-  };
+  const isSilent = muted || volume === 0;
 
   return (
-    <div 
+    <div
       ref={containerRef}
       style={{ display: 'flex', alignItems: 'center', position: 'relative' }}
     >
-      <button 
-        onClick={toggleOpen}
-        className="nav-btn btn-sound" 
-        aria-label="Toggle Sound" 
-        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, transition: 'transform 0.2s' }} 
-        onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'} 
-        onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="nav-btn btn-sound"
+        aria-label="Atur Volume"
+        style={{
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          padding: 0,
+          transition: 'transform 0.2s',
+          opacity: isSilent ? 0.5 : 1,
+          filter: isSilent ? 'grayscale(80%)' : 'none',
+        }}
+        onMouseOver={e => (e.currentTarget.style.transform = 'scale(1.05)')}
+        onMouseOut={e => (e.currentTarget.style.transform = 'scale(1)')}
       >
-        <img src="/assets/button/volume-button.png" alt="Sound" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+        <img
+          src="/assets/button/volume-button.png"
+          alt="Sound"
+          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+        />
       </button>
 
       {isOpen && (
         <div style={{
           position: 'absolute',
-          left: '110%', // Positioned to the right of the button
+          left: '110%',
           backgroundColor: '#fff',
           padding: '0 1cqw',
           borderRadius: '1.5cqw',
@@ -62,27 +82,29 @@ export function VolumeControl() {
           alignItems: 'center',
           animation: 'fadeIn 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)',
           zIndex: 100,
-          height: '3cqw'
+          height: '3cqw',
+          gap: '0.5cqw',
         }}>
-          <input 
-            type="range" 
-            min="0" 
-            max="1" 
-            step="0.01" 
-            value={volume} 
-            onChange={handleSliderChange}
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={muted ? 0 : volume}
+            onChange={handleVolumeChange}
             className="styled-slider"
-            style={{ 
+            style={{
               width: '12cqw',
-              background: `linear-gradient(to right, #007bff 0%, #007bff ${volume * 100}%, #e0e0e0 ${volume * 100}%, #e0e0e0 100%)`
+              background: `linear-gradient(to right, #007bff 0%, #007bff ${(muted ? 0 : volume) * 100}%, #e0e0e0 ${(muted ? 0 : volume) * 100}%, #e0e0e0 100%)`,
             }}
           />
         </div>
       )}
+
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: scale(0.9) translateX(-10px); }
-          to { opacity: 1; transform: scale(1) translateX(0); }
+          to   { opacity: 1; transform: scale(1)   translateX(0); }
         }
 
         .styled-slider {

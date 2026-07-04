@@ -86,3 +86,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .deco-left { left: 15cqw; }
   .deco-right { right: 15cqw; }
 </style>
+
+<script>
+  // If user already filled biodata, skip splash and go directly to menu
+  if (sessionStorage.getItem('bgm_started') === 'true') {
+    window.location.replace('/menu');
+  }
+</script>
+

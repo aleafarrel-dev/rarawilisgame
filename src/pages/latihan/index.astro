@@ -1,50 +1,19 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PracticeGame from '../../components/practice/PracticeGame';
 ---
 
 <BaseLayout title="Latihan">
-  <main class="coming-soon-screen">
-    <nav class="top-nav">
-      <button class="nav-btn btn-sound" aria-label="Toggle Sound">
-        <img src="/assets/button/volume-button.png" alt="Sound" />
-      </button>
-      <a href="/menu" class="nav-btn btn-home" aria-label="Home">
-        <img src="/assets/button/home-button.png" alt="Home" />
-      </a>
-    </nav>
-
-    <h1 class="page-title">LATIHAN</h1>
-    <div class="coming-soon-container">
-      <h2>Segera Hadir!</h2>
-      <p>Fitur latihan sedang dalam tahap pengembangan.</p>
-    </div>
+  <main class="practice-screen">
+    <PracticeGame client:load />
   </main>
 </BaseLayout>
 
 <style>
-  .coming-soon-screen {
+  .practice-screen {
     width: 100%;
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    min-height: 100vh;
     position: relative;
-    padding-top: 15cqh;
-  }
-  .coming-soon-container {
-    margin-top: 15cqh;
-    background-color: #fef0ba;
-    border: 0.2cqw solid #1b263b;
-    border-radius: 2cqw;
-    padding: 5cqh 5cqw;
-    text-align: center;
-  }
-  .coming-soon-container h2 {
-    color: #ff5454;
-    font-size: 4cqw;
-  }
-  .coming-soon-container p {
-    font-size: 2cqw;
-    font-weight: 600;
+    overflow: hidden;
   }
 </style>
