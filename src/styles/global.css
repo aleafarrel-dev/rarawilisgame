@@ -52,7 +52,7 @@ body {
   
   /* Lock to viewport to simulate game screen */
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -63,8 +63,8 @@ body {
 .app-container {
   width: 100vw;
   height: 56.25vw; /* 9/16 = 0.5625 */
-  max-height: 100vh;
-  max-width: 177.77vh; /* 16/9 = 1.7777 */
+  max-height: 100dvh;
+  max-width: 177.77dvh; /* 16/9 = 1.7777 */
   margin: auto;
   position: relative;
   background-color: transparent;

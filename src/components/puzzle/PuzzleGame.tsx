@@ -16,12 +16,11 @@ export interface PieceData {
   id: string;
   col: number;
   row: number;
-  path: string;
   isPlaced: boolean;
-  vLeft: number;
-  vTop: number;
-  trueWidth: number;
-  trueHeight: number;
+  edgeTop: EdgeType;
+  edgeRight: EdgeType;
+  edgeBottom: EdgeType;
+  edgeLeft: EdgeType;
 }
 
 
@@ -35,9 +34,28 @@ export default function PuzzleGame() {
   const rows = layout.length;
   const color = level.color;
 
-  // Size for desktop/tablet landscape
-  const pieceW = 80;
-  const pieceH = 80;
+  // Dynamic piece sizes
+  const [pieceW, setPieceW] = useState(80);
+  const [pieceH, setPieceH] = useState(80);
+
+  useEffect(() => {
+    const updateSize = () => {
+      let appW = window.innerWidth;
+      let appH = appW * 0.5625;
+      if (appH > window.innerHeight) {
+        appH = window.innerHeight;
+        appW = appH * 1.7777;
+      }
+      // Calculate a comfortable size for pieces based on the app container height
+      const newSize = Math.max(30, Math.min(80, appH * 0.14));
+      setPieceW(newSize);
+      setPieceH(newSize);
+    };
+
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
 
   const [activeId, setActiveId] = useState<string | null>(null);
   const [pieces, setPieces] = useState<PieceData[]>([]);
@@ -64,19 +82,9 @@ export default function PuzzleGame() {
         const bottom = (hasBottom ? hEdges[r][c] : 0) as EdgeType;
         const left = (hasLeft ? -vEdges[r][c - 1] : 2) as EdgeType;
 
-        const path = generateJigsawPath(pieceW, pieceH, top, right, bottom, left);
-
-        const vTop = top === 2 ? -pieceH : (top === 1 ? -pieceH * 0.25 : 0);
-        const vRight = right === 2 ? pieceW * 2 : (right === 1 ? pieceW * 1.25 : pieceW);
-        const vBottom = bottom === 2 ? pieceH * 2 : (bottom === 1 ? pieceH * 1.25 : pieceH);
-        const vLeft = left === 2 ? -pieceW : (left === 1 ? -pieceW * 0.25 : 0);
-
-        const trueWidth = vRight - vLeft;
-        const trueHeight = vBottom - vTop;
-
         newPieces.push({
-          id: `piece-${level.id}-${c}-${r}`, col: c, row: r, path, isPlaced: false,
-          vLeft, vTop, trueWidth, trueHeight
+          id: `piece-${level.id}-${c}-${r}`, col: c, row: r, isPlaced: false,
+          edgeTop: top, edgeRight: right, edgeBottom: bottom, edgeLeft: left
         });
       }
     }
@@ -135,7 +143,22 @@ export default function PuzzleGame() {
     }
   };
 
-  const trayPieces = pieces.filter(p => !p.isPlaced);
+  // Compute visual properties on the fly to support dynamic resizing
+  const scaleFactor = pieceW / 80;
+  const scaledShapePath = level.shapePath.replace(/[-+]?[0-9]*\.?[0-9]+/g, m => String(Number(m) * scaleFactor));
+
+  const piecesWithVisuals = pieces.map(p => {
+    const path = generateJigsawPath(pieceW, pieceH, p.edgeTop, p.edgeRight, p.edgeBottom, p.edgeLeft);
+    const vTop = p.edgeTop === 2 ? -pieceH : (p.edgeTop === 1 ? -pieceH * 0.25 : 0);
+    const vRight = p.edgeRight === 2 ? pieceW * 2 : (p.edgeRight === 1 ? pieceW * 1.25 : pieceW);
+    const vBottom = p.edgeBottom === 2 ? pieceH * 2 : (p.edgeBottom === 1 ? pieceH * 1.25 : pieceH);
+    const vLeft = p.edgeLeft === 2 ? -pieceW : (p.edgeLeft === 1 ? -pieceW * 0.25 : 0);
+    const trueWidth = vRight - vLeft;
+    const trueHeight = vBottom - vTop;
+    return { ...p, path, vLeft, vTop, trueWidth, trueHeight };
+  });
+
+  const trayPieces = piecesWithVisuals.filter(p => !p.isPlaced);
   const boardWidth = cols * pieceW;
   const boardHeight = rows * pieceH;
 
@@ -271,11 +294,11 @@ export default function PuzzleGame() {
           {`Level ${currentLevelIndex + 1} - Susun bentuk ${level.name.split(' (')[0]}`}
         </h2>
 
-        <div style={{ display: 'flex', width: '100%', gap: '6cqw', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', width: '100%', gap: '2cqw', alignItems: 'center', justifyContent: 'center' }}>
           <DndContext sensors={sensors} onDragStart={handleDragStart} onDragCancel={handleDragCancel} onDragEnd={handleDragEnd}>
             {/* Tray Area (Left) */}
             <div className="puzzle-tray" style={{
-              width: '40cqw',
+              width: '45cqw',
               height: '60cqh',
               position: 'relative',
               border: '0.2cqw dashed #1b263b',
@@ -285,8 +308,8 @@ export default function PuzzleGame() {
               flexWrap: 'wrap',
               alignContent: 'flex-start',
               justifyContent: 'center',
-              gap: '40px',
-              padding: '40px',
+              gap: '2cqw',
+              padding: '2cqw',
               overflowY: 'auto'
             }}>
               {trayPieces.map(p => (
@@ -299,7 +322,7 @@ export default function PuzzleGame() {
                     height={pieceH}
                     col={p.col}
                     row={p.row}
-                    shapePath={level.shapePath}
+                    shapePath={scaledShapePath}
                     vLeft={p.vLeft}
                     vTop={p.vTop}
                     trueWidth={p.trueWidth}
@@ -318,7 +341,7 @@ export default function PuzzleGame() {
             }}>
               {/* Silhouette Vector */}
               <svg width={boardWidth} height={boardHeight} style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }}>
-                <path d={level.shapePath} fill="rgba(255, 255, 255, 0.5)" stroke="#1b263b" strokeWidth="4" />
+                <path d={scaledShapePath} fill="rgba(255, 255, 255, 0.5)" stroke="#1b263b" strokeWidth="4" />
               </svg>
 
               {Array.from({ length: rows }).map((_, r) =>
@@ -326,8 +349,8 @@ export default function PuzzleGame() {
                   if (layout[r][c] !== 'X') return null;
 
                   const slotId = `slot-${c}-${r}`;
-                  const placedPiece = pieces.find(p => p.col === c && p.row === r && p.isPlaced);
-                  const targetPiece = pieces.find(p => p.col === c && p.row === r);
+                  const placedPiece = piecesWithVisuals.find(p => p.col === c && p.row === r && p.isPlaced);
+                  const targetPiece = piecesWithVisuals.find(p => p.col === c && p.row === r);
 
                   return (
                     <div key={`wrap-${slotId}`} style={{
@@ -338,7 +361,7 @@ export default function PuzzleGame() {
                       height: pieceH,
                       boxSizing: 'border-box'
                     }}>
-                      <DropSlot id={slotId} width={pieceW} height={pieceH} col={0} row={0} targetPiece={targetPiece} shapePath={level.shapePath}>
+                      <DropSlot id={slotId} width={pieceW} height={pieceH} col={0} row={0} targetPiece={targetPiece} shapePath={scaledShapePath}>
                         {placedPiece && (
                           <PuzzlePiece
                             id={placedPiece.id}
@@ -349,7 +372,7 @@ export default function PuzzleGame() {
                             disabled={true}
                             col={c}
                             row={r}
-                            shapePath={level.shapePath}
+                            shapePath={scaledShapePath}
                             vLeft={placedPiece.vLeft}
                             vTop={placedPiece.vTop}
                             trueWidth={placedPiece.trueWidth}
@@ -367,7 +390,7 @@ export default function PuzzleGame() {
             <DragOverlay dropAnimation={null}>
               {activeId ? (
                 (() => {
-                  const activePiece = pieces.find(p => p.id === activeId);
+                  const activePiece = piecesWithVisuals.find(p => p.id === activeId);
                   if (!activePiece) return null;
                   return (
                     <div style={{ width: activePiece.trueWidth, height: activePiece.trueHeight, scale: '1.05', cursor: 'grabbing' }}>
@@ -379,7 +402,7 @@ export default function PuzzleGame() {
                         height={pieceH}
                         col={activePiece.col}
                         row={activePiece.row}
-                        shapePath={level.shapePath}
+                        shapePath={scaledShapePath}
                         disabled={true}
                         vLeft={activePiece.vLeft}
                         vTop={activePiece.vTop}

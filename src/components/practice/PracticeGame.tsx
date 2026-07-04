@@ -256,10 +256,6 @@ export default function PracticeGame() {
         >
           <img src="/assets/button/prev-button.png" alt="Prev" style={{ width: '100%', objectFit: 'contain' }} />
         </button>
-        
-        <button onClick={handleNext} style={{ position: 'absolute', bottom: '5cqh', right: '5cqw', background: 'none', border: 'none', cursor: 'pointer', width: '7cqw', transition: 'transform 0.2s' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}>
-          <img src="/assets/button/next-button.png" alt="Next" style={{ width: '100%', objectFit: 'contain' }} />
-        </button>
 
         {/* Feedback Modal Overlay */}
         {feedback && (
