@@ -47,7 +47,7 @@ export default function PuzzleGame() {
         appW = appH * 1.7777;
       }
       // Calculate a comfortable size for pieces based on the app container height
-      const newSize = Math.max(30, Math.min(80, appH * 0.14));
+      const newSize = Math.min(80, appH * 0.10);
       setPieceW(newSize);
       setPieceH(newSize);
     };
@@ -280,65 +280,70 @@ export default function PuzzleGame() {
         </a>
       </nav>
 
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'center', paddingTop: '10cqh' }}>
+      <div style={{ flex: 1, position: 'relative', width: '100%', height: '100%' }}>
+        <DndContext sensors={sensors} onDragStart={handleDragStart} onDragCancel={handleDragCancel} onDragEnd={handleDragEnd}>
 
-        {/* Hint Text */}
-        <h2 style={{
-          color: '#1b263b',
-          fontSize: '2.5cqw',
-          marginBottom: '6cqh',
-          textAlign: 'center',
-          fontWeight: 'bold',
-          textShadow: '1px 1px 2px rgba(255,255,255,0.8)'
-        }}>
-          {`Level ${currentLevelIndex + 1} - Susun bentuk ${level.name.split(' (')[0]}`}
-        </h2>
+          {/* Hint Text */}
+          <h2 style={{
+            position: 'absolute',
+            top: '10cqh',
+            right: '10cqw',
+            width: '35cqw',
+            color: '#ef4444',
+            fontSize: '3cqw',
+            textAlign: 'left',
+            fontWeight: '900',
+            fontFamily: "'Nunito', sans-serif",
+            lineHeight: '1.2',
+            zIndex: 10
+          }}>
+            Susunlah pazzel di<br />Samping menjadi<br />bangun datar!!!
+          </h2>
 
-        <div style={{ display: 'flex', width: '100%', gap: '2cqw', alignItems: 'center', justifyContent: 'center' }}>
-          <DndContext sensors={sensors} onDragStart={handleDragStart} onDragCancel={handleDragCancel} onDragEnd={handleDragEnd}>
-            {/* Tray Area (Left) */}
-            <div className="puzzle-tray" style={{
-              width: '45cqw',
-              height: '60cqh',
-              position: 'relative',
-              border: '0.2cqw dashed #1b263b',
-              borderRadius: '1cqw',
-              backgroundColor: 'rgba(255,255,255,0.4)',
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignContent: 'flex-start',
-              justifyContent: 'center',
-              gap: '2cqw',
-              padding: '2cqw',
-              overflowY: 'auto'
-            }}>
-              {trayPieces.map(p => (
-                <div key={p.id} style={{ position: 'relative', width: p.trueWidth, height: p.trueHeight }}>
-                  <PuzzlePiece
-                    id={p.id}
-                    path={p.path}
-                    color={color}
-                    width={pieceW}
-                    height={pieceH}
-                    col={p.col}
-                    row={p.row}
-                    shapePath={scaledShapePath}
-                    vLeft={p.vLeft}
-                    vTop={p.vTop}
-                    trueWidth={p.trueWidth}
-                    trueHeight={p.trueHeight}
-                    isPlaced={false}
-                  />
-                </div>
-              ))}
-            </div>
+          {/* Tray Area (Left) */}
+          <div className="puzzle-tray" style={{
+            position: 'absolute',
+            top: '20cqh',
+            left: '5cqw',
+            width: '48cqw',
+            height: '80cqh',
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignContent: 'flex-start',
+            justifyContent: 'flex-start',
+            gap: '1cqw',
+            overflowY: 'auto'
+          }}>
+            {trayPieces.map(p => (
+              <div key={p.id} style={{ position: 'relative', width: p.trueWidth, height: p.trueHeight }}>
+                <PuzzlePiece
+                  id={p.id}
+                  path={p.path}
+                  color={color}
+                  width={pieceW}
+                  height={pieceH}
+                  col={p.col}
+                  row={p.row}
+                  shapePath={scaledShapePath}
+                  vLeft={p.vLeft}
+                  vTop={p.vTop}
+                  trueWidth={p.trueWidth}
+                  trueHeight={p.trueHeight}
+                  isPlaced={false}
+                />
+              </div>
+            ))}
+          </div>
 
-            {/* Board Area (Right) */}
-            <div style={{
-              position: 'relative',
-              width: boardWidth,
-              height: boardHeight,
-            }}>
+          {/* Board Area (Right) */}
+          <div style={{
+            position: 'absolute',
+            top: '60cqh',
+            right: '15cqw',
+            transform: 'translateY(-50%)',
+            width: boardWidth,
+            height: boardHeight,
+          }}>
               {/* Silhouette Vector */}
               <svg width={boardWidth} height={boardHeight} style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }}>
                 <path d={scaledShapePath} fill="rgba(255, 255, 255, 0.5)" stroke="#1b263b" strokeWidth="4" />
@@ -416,24 +421,17 @@ export default function PuzzleGame() {
               ) : null}
             </DragOverlay>
           </DndContext>
-        </div>
 
         {/* Custom scrollbar styles */}
         <style>{`
+          .puzzle-tray {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+          }
           .puzzle-tray::-webkit-scrollbar {
-            width: 0.8cqw;
-          }
-          .puzzle-tray::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 1cqw;
-          }
-          .puzzle-tray::-webkit-scrollbar-thumb {
-            background-color: #fbc962;
-            border-radius: 1cqw;
-            border: 0.2cqw solid #1b263b;
-          }
-          .puzzle-tray::-webkit-scrollbar-thumb:hover {
-            background-color: #f4a261;
+            display: none;
+            width: 0;
+            height: 0;
           }
         `}</style>
 

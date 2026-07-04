@@ -1,13 +1,13 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageLayout from '../../layouts/PageLayout.astro';
 import PracticeGame from '../../components/practice/PracticeGame';
 ---
 
-<BaseLayout title="Latihan">
+<PageLayout title="Latihan">
   <main class="practice-screen">
     <PracticeGame client:load />
   </main>
-</BaseLayout>
+</PageLayout>
 
 <style>
   .practice-screen {

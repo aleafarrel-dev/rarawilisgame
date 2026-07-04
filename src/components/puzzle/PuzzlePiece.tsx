@@ -40,7 +40,7 @@ export function PuzzlePiece({ id, path, color, width, height, disabled, col, row
       <svg width={trueWidth} height={trueHeight} viewBox={`${vLeft} ${vTop} ${trueWidth} ${trueHeight}`} style={{ overflow: 'visible' }}>
         <defs>
           <filter id={`shadow-${id}`} x="-30%" y="-30%" width="160%" height="160%">
-            <feDropShadow dx="3" dy="5" stdDeviation="4" floodColor="#000" floodOpacity="0.3" />
+            <feDropShadow dx="1" dy="2" stdDeviation="2" floodColor="#000" floodOpacity="0.15" />
           </filter>
           {shapePath && col !== undefined && row !== undefined && (
             <>
@@ -59,16 +59,16 @@ export function PuzzlePiece({ id, path, color, width, height, disabled, col, row
             <>
               <g mask={`url(#mask-shape-${id})`}>
                 <path d={path} fill={color} />
-                <path d={path} fill="none" stroke="#1b263b" strokeWidth="3" strokeLinejoin="round" />
+                <path d={path} fill="none" stroke="#1b263b" strokeWidth="1.5" strokeLinejoin="round" />
               </g>
               <g mask={`url(#mask-jigsaw-${id})`}>
-                <path d={shapePath} transform={`translate(-${col * width}, -${row * height})`} fill="none" stroke="#1b263b" strokeWidth="3" strokeLinejoin="round" />
+                <path d={shapePath} transform={`translate(-${col * width}, -${row * height})`} fill="none" stroke="#1b263b" strokeWidth="1.5" strokeLinejoin="round" />
               </g>
             </>
           ) : (
             <>
               <path d={path} fill={color} />
-              <path d={path} fill="none" stroke="#1b263b" strokeWidth="3" strokeLinejoin="round" />
+              <path d={path} fill="none" stroke="#1b263b" strokeWidth="1.5" strokeLinejoin="round" />
             </>
           )}
         </g>

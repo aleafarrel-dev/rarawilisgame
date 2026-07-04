@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { navigate } from 'astro:transitions/client';
 import { playAudio } from '../../stores/audioStore';
-import { VolumeControl } from '../puzzle/VolumeControl';
 import { PRACTICE_QUESTIONS } from '../../data/practiceQuestions';
 import type { PracticeQuestion } from '../../data/practiceQuestions';
 import confetti from 'canvas-confetti';
@@ -74,34 +73,10 @@ export default function PracticeGame() {
     fontFamily: '"Fredoka One", "Nunito", sans-serif'
   };
 
-  const gridBackgroundStyle: React.CSSProperties = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100vw',
-    height: '100vh',
-    backgroundColor: '#fff',
-    backgroundImage: `
-      linear-gradient(lightblue 1px, transparent 1px),
-      linear-gradient(90deg, lightblue 1px, transparent 1px)
-    `,
-    backgroundSize: '30px 30px',
-    zIndex: 1
-  };
-
   if (!hasStarted) {
     return (
       <>
-        <div style={gridBackgroundStyle} />
         <div style={containerStyle}>
-          {/* Controls */}
-          <div style={{ position: 'absolute', top: '5cqh', left: '5cqw', width: '7cqw', zIndex: 30 }}>
-            <VolumeControl />
-          </div>
-          <a href="/menu" style={{ position: 'absolute', top: '5cqh', right: '5cqw', width: '7cqw', transition: 'transform 0.2s' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}>
-            <img src="/assets/button/home-button.png" alt="Home" style={{ width: '100%', objectFit: 'contain' }} />
-          </a>
-
           <h1 style={{ 
             fontSize: '6cqw', 
             color: '#ff4d4d', 
@@ -141,16 +116,7 @@ export default function PracticeGame() {
   if (isFinished) {
     return (
       <>
-        <div style={gridBackgroundStyle} />
         <div style={containerStyle}>
-          {/* Top Controls */}
-          <div style={{ position: 'absolute', top: '5cqh', left: '5cqw', width: '7cqw', zIndex: 30 }}>
-            <VolumeControl />
-          </div>
-          <a href="/menu" style={{ position: 'absolute', top: '5cqh', right: '5cqw', width: '7cqw', transition: 'transform 0.2s' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}>
-            <img src="/assets/button/home-button.png" alt="Home" style={{ width: '100%', objectFit: 'contain' }} />
-          </a>
-
           {/* Summary Board */}
           <SummaryBoard
             biodata={biodata}
@@ -163,18 +129,23 @@ export default function PracticeGame() {
     );
   }
 
+  if (feedback) {
+    return (
+      <>
+        <div style={containerStyle}>
+          <FeedbackModal
+            feedback={feedback}
+            score={score}
+            onNext={handleNext}
+          />
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
-      <div style={gridBackgroundStyle} />
       <div style={containerStyle}>
-        {/* Top Controls */}
-        <div style={{ position: 'absolute', top: '5cqh', left: '5cqw', width: '7cqw', zIndex: 30 }}>
-          <VolumeControl />
-        </div>
-        <a href="/menu" style={{ position: 'absolute', top: '5cqh', right: '5cqw', width: '7cqw', transition: 'transform 0.2s' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}>
-          <img src="/assets/button/home-button.png" alt="Home" style={{ width: '100%', objectFit: 'contain' }} />
-        </a>
-
         {/* Question Area */}
         <h2 style={{ 
           fontSize: '4cqw', 
@@ -256,15 +227,6 @@ export default function PracticeGame() {
         >
           <img src="/assets/button/prev-button.png" alt="Prev" style={{ width: '100%', objectFit: 'contain' }} />
         </button>
-
-        {/* Feedback Modal Overlay */}
-        {feedback && (
-          <FeedbackModal
-            feedback={feedback}
-            score={score}
-            onNext={handleNext}
-          />
-        )}
       </div>
     </>
   );

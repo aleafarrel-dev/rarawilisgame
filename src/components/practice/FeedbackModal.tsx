@@ -10,28 +10,40 @@ export function FeedbackModal({ feedback, score, onNext }: FeedbackModalProps) {
 
   return (
     <div style={{
-      position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-      backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 100,
-      display: 'flex', justifyContent: 'center', alignItems: 'center'
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '100%',
+      position: 'relative'
     }}>
+      {/* Board and Character Container */}
       <div style={{
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        width: '60cqw'
+        transform: 'translateY(-5cqh)' // Move up slightly so it fits well on screen
       }}>
+        
         {/* Umpan Balik Sign Banner */}
         <div style={{
           backgroundColor: '#fdf1d6', // beige
-          border: '0.4cqw solid #8b5a2b',
+          border: '0.3cqw solid #8b5a2b',
           borderRadius: '1cqw',
           padding: '1cqh 3cqw',
           zIndex: 4,
           position: 'relative',
           boxShadow: '0 4px 6px rgba(0,0,0,0.2)'
         }}>
-          <h3 style={{ fontSize: '3cqw', color: '#ff4d4d', fontWeight: 'bold', margin: 0 }}>UMPAN BALIK</h3>
+          {/* Strings from top of screen to the board */}
+          <div style={{ position: 'absolute', top: '1.3cqh', left: '15%', width: '0.3cqw', height: '100cqh', backgroundColor: '#8b5a2b', zIndex: -1, transform: 'translate(-50%, -100%)' }}></div>
+          <div style={{ position: 'absolute', top: '1.3cqh', right: '15%', width: '0.3cqw', height: '100cqh', backgroundColor: '#8b5a2b', zIndex: -1, transform: 'translate(50%, -100%)' }}></div>
+
+          {/* Nails for strings */}
+          <div style={{ position: 'absolute', top: '1cqh', left: '15%', width: '0.6cqw', height: '0.6cqw', backgroundColor: '#a23333', borderRadius: '50%', transform: 'translateX(-50%)', zIndex: 2 }}></div>
+          <div style={{ position: 'absolute', top: '1cqh', right: '15%', width: '0.6cqw', height: '0.6cqw', backgroundColor: '#a23333', borderRadius: '50%', transform: 'translateX(50%)', zIndex: 2 }}></div>
+
+          <h3 style={{ fontSize: '3cqw', color: '#ff4d4d', fontWeight: '900', margin: 0, letterSpacing: '0.1cqw' }}>UMPAN BALIK</h3>
         </div>
 
         {/* Emoji hanging */}
@@ -41,7 +53,7 @@ export function FeedbackModal({ feedback, score, onNext }: FeedbackModalProps) {
             width: '12cqw', 
             zIndex: 3,
             position: 'relative',
-            marginTop: '-1cqh' // Slightly overlaps the sign
+            marginTop: '-1cqh' // Overlaps the sign
           }} 
         />
 
@@ -58,40 +70,41 @@ export function FeedbackModal({ feedback, score, onNext }: FeedbackModalProps) {
           alignItems: 'center',
           justifyContent: 'center',
           paddingTop: '6cqw', // Space for emoji
-          marginTop: '-10cqh', // Pull cloud up to overlap behind emoji
+          marginTop: '-10cqh', // Pull cloud up to overlap behind emoji properly
           zIndex: 2,
           position: 'relative'
         }}>
+
           {/* Stars */}
-          <div style={{ display: 'flex', gap: '1cqw', marginBottom: '2cqh' }}>
+          <div style={{ display: 'flex', gap: '1.5cqw', marginBottom: '1cqh' }}>
             {isCorrect && (
-              <img src="/assets/icon/star.png" style={{ width: '5cqw' }} />
+              <img src="/assets/icon/star.png" style={{ width: '4.5cqw' }} />
             )}
-            <img src="/assets/icon/star.png" style={{ width: '6cqw', transform: isCorrect ? 'translateY(-1cqh)' : 'translateY(0)' }} />
+            <img src="/assets/icon/star.png" style={{ width: '5.5cqw', transform: isCorrect ? 'translateY(-1cqh)' : 'translateY(0)' }} />
             {isCorrect && (
-              <img src="/assets/icon/star.png" style={{ width: '5cqw' }} />
+              <img src="/assets/icon/star.png" style={{ width: '4.5cqw' }} />
             )}
           </div>
           
           {/* Text Message */}
-          <p style={{ fontSize: '2cqw', color: '#ff4d4d', fontWeight: 'bold', margin: '0 0 2cqh 0' }}>
+          <p style={{ fontSize: '2cqw', color: '#ff4d4d', fontWeight: 'bold', margin: '0 0 1.5cqh 0' }}>
             {isCorrect ? 'Jawabanmu Benar!' : 'Jawabanmu Kurang Tepat!'}
           </p>
 
           {/* Coin Container */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1cqw' }}>
-            <img src="/assets/icon/coin.png" style={{ width: '3cqw' }} />
+            <img src="/assets/icon/coin.png" style={{ width: '2.5cqw' }} />
             <span style={{ fontSize: '2.5cqw', fontWeight: 'bold', color: '#000' }}>
               {isCorrect ? '+10' : '0'}
             </span>
           </div>
         </div>
 
-        {/* Next Button matching PuzzleGame style */}
+        {/* Next Button */}
         <button
           onClick={onNext}
           style={{
-            marginTop: '1cqh',
+            marginTop: '2cqh',
             padding: '1cqw 3cqw',
             fontSize: '2cqw',
             fontWeight: 'bold',
