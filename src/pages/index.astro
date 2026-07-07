@@ -4,8 +4,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="Main">
   <main class="splash-screen">
-    <img src="/assets/logo/tut-wuri-handayani.png" alt="Tut Wuri Handayani" class="logo logo-left" />
-    <img src="/assets/logo/diktisanintek.png" alt="Diktisaintek" class="logo logo-right" />
+    <div class="logos-left">
+      <img src="/assets/logo/tut-wuri-handayani.png" alt="Tut Wuri Handayani" class="logo" />
+      <img src="/assets/logo/unu-yogyakarta.webp" alt="UNU Yogyakarta" class="logo" />
+    </div>
+    <img src="/assets/logo/diktisanintek.png" alt="Diktisaintek" class="logo logo-absolute logo-right" />
     
     <div class="center-content">
       <h1 class="game-title">
@@ -31,13 +34,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .logo {
-    position: absolute;
-    top: 5cqh;
     height: auto;
     max-height: 15cqh;
+  }
+
+  .logos-left {
+    position: absolute;
+    top: 5cqh;
+    left: 8cqw;
+    display: flex;
+    gap: 2cqw;
+    z-index: 10;
+    align-items: center;
+  }
+
+  .logo-absolute {
+    position: absolute;
+    top: 5cqh;
     z-index: 10;
   }
-  .logo-left { left: 8cqw; }
+
   .logo-right { right: 8cqw; }
 
   .center-content {
